@@ -1,0 +1,74 @@
+@import url("https://unpkg.com/carbon-components/css/carbon-components.min.css");
+
+body {
+  font-family: 'ibm-plex-sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+p {
+	font-size: 14px;
+	color: #152935;
+	margin-bottom: 5px;
+}
+
+.heading {
+	font-size: 28px;
+	font-weight: 300;
+	margin-bottom: 5px;
+}
+
+.blue {
+  background-color: #1466cc;
+}
+
+.red {
+  background-color: #ff0d3a;
+}
+
+.yellow {
+  background-color: #ffbc00;
+}
+
+.blue-text {
+  color: #3d70b2;
+}
+
+.black-text {
+	color: #152935;
+	font-weight: 300;
+}
+
+.logo-img {
+	max-width: 40%;
+}
+
+.signup-body {
+	margin: 20px;
+  	padding: 20px;
+	padding-left: 35%;
+	padding-right: 35%;
+}
+
+.signup-box {
+	padding-top: 30px;
+	padding-left: 30px;
+	padding-right: 30px;
+	background-color: white;
+}
+
+.form-field {
+	margin-bottom: 20px;
+}
+
+.required {
+	display: inline-block;
+	padding: 0 3px;
+}
+
+@media screen and (max-width: 721px) {
+  .signup-body {
+		margin: 5px;
+	  	padding: 5px;
+		padding-left: 5%;
+		padding-right: 5%;
+	}
+}
