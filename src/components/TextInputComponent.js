@@ -43,6 +43,18 @@ export const TextInputComponent = ({ input, className, id, labelText, placeholde
 	</div>
 )
 
+export const DisabledTextInputComponent = ({defaultValue, className, id, labelText, placeholder, type, meta: {touched, error, warning}}) => {
+	return <TextInput
+    className={className}
+    id={id}
+    type={type}
+    labelText={labelText} 
+    value={defaultValue}
+    defaultValue={defaultValue}
+    placeholder={placeholder}
+    disabled={true} />
+}
+
 TextInputComponent.propTypes = {
 	input: PropTypes.object.isRequired,
 	className: PropTypes.string,

@@ -14,103 +14,106 @@ import Steps, { Step } from 'rc-steps'
 
 import peramaxLogo from './peramax-logo.svg'
 import DropdownInput from './DropdownInput'
-import TextInputComponent from './TextInputComponent'
+import { DisabledTextInputComponent, TextInputComponent } from './TextInputComponent'
 import DatePickerComponent from './DatePickerComponent'
 
 import { birthOptions, residencyOptions, stateOptions, stateSuburb, provinceCities, provinceOptions } from './const'
 
+
+// Container layer for Presentation Components
 class SignUp extends Component {   
-  static propTypes = {     
-    signupSubmit:PropTypes.func.isRequired,
-    pristine: PropTypes.bool.isRequired,
-    submitting: PropTypes.bool.isRequired,
-    invalid: PropTypes.bool.isRequired
-}
-
-  state = { progress: 0, province: 'Abra', state: 'Australian Capital Territory', password: '' }
-
-  handleProvince = (value) => {
-    this.setState({province: value.value})
-  }
-
-  handleState = (value) => {
-    this.setState({state: value.value})
-  }
-
+    static propTypes = {     
+	signupSubmit:PropTypes.func.isRequired,
+	pristine: PropTypes.bool.isRequired,
+	submitting: PropTypes.bool.isRequired,
+	invalid: PropTypes.bool.isRequired
+    }
+    
+    state = { province: 'Abra', state: 'Australian Capital Territory', password: '' }
+    
+    handleProvince = (value) => {
+	this.setState({province: value.value})
+    }
+    
+    handleState = (value) => {
+	this.setState({state: value.value})
+    }
+    
     handleSignup = (values) => {
 	let payload = {
-	  country: values.country_origin,
-	  email: values.email,
-	  bday: new Date(values.birthdate).toISOString(),
-	  password: values.password,
-	  fname: values.first_name,
-	  mname: values.middle_name,
-	  lname: values.last_name,
-	  contact_no: values.mobile_no,
-	  address: values.street_origin,
-	  state: values.state_origin.value,
-	  suburb: values.suburb_origin.value,
-	  place_of_birth: values.birthplace.label,
-	  source_of_inc: values.source_of_income,
-	  occupation: values.occupation,
-	  citizenship: values.citizenship,
-	  post_code: values.postal_code_origin,
-	  residency: values.residency_status.label,
-	  address_ph: `${values.street_philippines}, ${values.city_philippines.value}, ${values.province_philippines.value}.`
-	};
+	    country: "Australia",
+	    email: values.email,
+	    bday: new Date(values.birthdate).toISOString(),
+	    password: values.password,
+	    fname: values.first_name,
+	    mname: values.middle_name,
+	    lname: values.last_name,
+	    contact_no: values.mobile_no,
+	    address: values.street_origin,
+	    state: values.state_origin.value,
+	    suburb: values.suburb_origin.value,
+	    place_of_birth: values.birthplace.label,
+	    source_of_inc: values.source_of_income,
+	    occupation: values.occupation,
+	    citizenship: values.citizenship,
+	    post_code: values.postal_code_origin,
+	    residency: values.residency_status.label,
+	    address_ph: `${values.street_philippines}, ${values.city_philippines.value}, ${values.province_philippines.value}.`
+	};	
 	this.props.signupSubmit(payload);
-  }
+    }
 
-  render() {
-    const { progress } = this.state
-    const { first_name,
-      middle_name, 
-      last_name,
-      email_address,
-      password,
-      confirm_password,
-      birthdate,
-      birthplace,
-      source_of_income,	    
-      occupation,
-      citizenship,
-      residency_status,
-      mobile_no,
-      street_origin,
-      country_origin,
-      state_origin,
-      suburb_origin,
-      postal_code_origin,
-      street_philippines,
-      province_philippines,
-      city_philippines,
-      postal_code_philippines, 
-      signup,
-      handleSubmit,
-      pristine,
-      submitting } = this.props
-
-    return (
-    <div>
-      <div className="row">
-        <div className="col-md-4 blue">
-          <br />
-        </div>
-        <div className="col-md-4 red">
-          <br />
-        </div>
-        <div className="col-md-4 yellow">
-          <br />
-        </div>
-      </div>
-      <div className="signup-body">
-          <center><img className="logo-img" src={peramaxLogo} alt="PeraMax Logo"/><br /><br /></center>
-          <Steps labelPlacement="vertical" current={progress}>
-            <Step title="Account" />
-            <Step title="Sender Info" />
-            <Step title="Done" />
-          </Steps><br /><br />
-        <Tile className="signup-box">
+    render() {
+	const progress = this.props.getRegProgress
+	const { first_name,
+		middle_name, 
+		last_name,
+		email_address,
+		password,
+		confirm_password,
+		birthdate,
+		birthplace,
+		source_of_income,	    
+		occupation,
+		citizenship,
+		residency_status,
+		mobile_no,
+		street_origin,
+		country_origin,
+		state_origin,
+		suburb_origin,
+		postal_code_origin,
+		street_philippines,
+		province_philippines,
+		city_philippines,
+		postal_code_philippines, 
+		signup,
+		handleSubmit,
+		pristine,
+		submitting } = this.props
+	
+	return (
+	    <div>
+	      <div className="row">
+		<div className="col-md-4 blue">
+		  <br />
+		</div>
+		<div className="col-md-4 red">
+		  <br />
+		</div>
+		<div className="col-md-4 yellow">
+		  <br />
+		</div>
+	      </div>
+	      <div className="signup-body">
+		<center><img className="logo-img" src={peramaxLogo} alt="PeraMax Logo"/><br /><br /></center>
+		<Steps labelPlacement="vertical" current={progress}>
+		  <Step title="Account" />
+		  <Step title="Sender Info" />
+		  <Step title="Submit" />
+		  <Step title="Done" />
+		</Steps><br /><br />
+		<Tile className="signup-box">
           <Form className="some-class" onSubmit={handleSubmit(this.handleSignup)}>
           { progress === 0 ?  
               <FormGroup className="some-class" legendText="">
@@ -179,7 +182,7 @@ class SignUp extends Component {
                     validate={[ required(), confirmation({ field: 'password', fieldLabel: 'Password' }) ]}
                   />
                 </div>
-                <Button className="float-right" disabled={pristine || submitting} onClick={() => this.setState({ progress: 1 })}>
+                    <Button className="float-right" disabled={pristine || submitting} onClick={() => this.props.signupProgress() }>
                 Next
                 </Button>
               </FormGroup>
@@ -289,18 +292,17 @@ class SignUp extends Component {
                   </div>
                   <div className="form-row">
                    <div className="col-md-12 form-field">
-                      <FormLabel className="some-class">
-                        Country˟
-                      </FormLabel>
                       <FormItem>
                         <Field
-                          component={TextInputComponent}
-                          labelText="Country"
+                          component={DisabledTextInputComponent}
+                          labelText="Country*"
 			  id="country_origin"
                           name="country_origin"
 			  defaultValue="Australia"
+			  value="Australia"    
 			  type="text"
-                          validate={[ required() ]}   
+                          validate={[ required() ]}
+			  props={{disabled: true}}    
                         />
                       </FormItem>
                     </div>
@@ -405,15 +407,15 @@ class SignUp extends Component {
                   </div>
                 </FormGroup>
                 <div className="float-right">
-                  <Button kind="secondary" disabled={pristine || submitting} onClick={() => this.setState({ progress: 0 })}>
+                  <Button kind="secondary" disabled={pristine || submitting} onClick={() => this.props.signupRegress()}>
                     Back
                   </Button>
-                  <Button onClick={() => this.setState({ progress: 2 })}>
+                  <Button onClick={() => this.props.signupProgress()}>
                     Next
                   </Button>
                 </div>
              </FormGroup>
-          :
+          : progress === 2 ?
             <FormGroup className="some-class" legendText="">
             <p className="blue-text heading ">Ready to Submit?</p>
             <p className="black-text">Read all your information and click submit.</p>
@@ -429,7 +431,7 @@ class SignUp extends Component {
             <p className="black-text">Mobile Number: <strong> {mobile_no} </strong></p>
             <p className="black-text">Address (Origin): 
               <strong>
-                {street_origin}, {country_origin.value}, {state_origin.value}, {suburb_origin.value}, {postal_code_origin}
+                {street_origin}, "Australia", {state_origin.value}, {suburb_origin.value}, {postal_code_origin}
               </strong>
             </p>
             <p className="black-text">Address (Philippines): 
@@ -440,14 +442,16 @@ class SignUp extends Component {
             <br /><br />
 
             <div className="float-right">
-              <Button kind="secondary" onClick={() => this.setState({ progress: 1 })} >
+              <Button kind="secondary" onClick={() => this.props.signupRegress()} >
                 Back
               </Button>
-              <Button type="submit" disabled={ submitting }>
+		  <Button type="submit" disabled={ submitting } >
                 Submit
               </Button>
-            </div>
-            </FormGroup>
+	    </div>
+	  </FormGroup>
+		: progress === -1 ? <p className="blue-text heading">Registration Successful</p>
+		: <p className="red-text heading"> Registration failure, please contact our Customer Support</p>
         }
         </Form>
         </Tile>
@@ -459,16 +463,24 @@ class SignUp extends Component {
 
 
 const mapStateToProps = state => {
-  return {
-  }
+    return {
+	getRegProgress: state.signup.progress,
+	getRegState: state.signup.signupSuccess
+    }
 }
 
 const mapDispatchToProps = dispatch => {
-  return {
-    signupSubmit: (payload) => {
-      dispatch(signup.signupSubmit(payload))
-    }, 
-  }
+    return {
+	signupSubmit: (payload) => {
+	    dispatch(signup.signupSubmit(payload))
+	},
+	signupProgress: () => {
+	    dispatch(signup.signupForward())
+	},
+	signupRegress: () => {
+	    dispatch(signup.signupBackward())
+	}
+    }
 }
 
 SignUp = connect(

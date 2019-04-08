@@ -1,9 +1,12 @@
-import { Map } from 'immutable'
-import { signupSubmit } from '../actions/signup'
+import { Map } from 'immutable';
+import signupAction from '../actions/';
 
 export const SIGNUP_REQUEST = 'SIGNUP_REQUEST'
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE'
+export const SIGNUP_FORWARD = 'SIGNUP_FORWARD'
+export const SIGNUP_BACKWARD = 'SIGNUP_BACKWARD'
+
 
 export function signupRequest (payload) {
   return {
@@ -26,30 +29,48 @@ export function signupFailure (payload) {
   }
 }
 
-export const actions = { signupSubmit }
+export function signupForward(){
+    return {
+	type: SIGNUP_FORWARD
+    }
+}
 
-const initialState = new Map({
-  user: null
-})
-
-
-const ACTION_HANDLERS = {
-  [SIGNUP_REQUEST]: (state, { payload }) => {
-    return state.set('isLoading', true)
-  },
-  [SIGNUP_SUCCESS]: (state, { payload }) => {
-    return state.set('isLoading', false)
-	  .set('signupSuccess', true);
-  },
-  [SIGNUP_FAILURE]: (state, { payload }) => {
-    return state.set('signupError', true)
-    .set('errors', payload)
-    .set('signupSuccess', false)
-  }
+export function signupBackward(){
+    return {
+	type: SIGNUP_BACKWARD
+    }
 }
 
 
+const initialState = {
+    user: null,
+    progress: 0
+};
+
+const ACTION_HANDLERS = {
+    [SIGNUP_REQUEST]: (state, { payload }) => {
+	return { ...state, isLoading: true }
+    },
+    [SIGNUP_SUCCESS]: (state, { payload }) => {
+	let isLoading     = false,
+	    signupSuccess = true;
+	return { ...state, isLoading, progress: -1};
+    },
+    [SIGNUP_FAILURE]: (state, { payload }) => {
+	let errors        = payload,
+	    signupSuccess = false;
+	return { ...state, errors, progress: -2};
+    },
+    [SIGNUP_FORWARD]: state => {
+	return { ...state, progress: state.progress+1 }
+    },
+    [SIGNUP_BACKWARD]: state => {
+	return { ...state, progres: state.progress-1 }
+    }
+};
+
+
 export default function signup(state=initialState, action) {
-  const handler = ACTION_HANDLERS[action.type]
-  return handler ? handler(state, action) : state
+    const handler = ACTION_HANDLERS[action.type]
+    return handler ? handler(state, action) : state
 } 
