@@ -1,11 +1,7 @@
-import { Map } from 'immutable';
-import signupAction from '../actions/';
+import { SIGNUP_REQUEST, SIGNUP_SUCCESS,
+	 SIGNUP_FAILURE, SIGNUP_FORWARD, SIGNUP_BACKWARD } from '../actions/constants';
 
-export const SIGNUP_REQUEST = 'SIGNUP_REQUEST'
-export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
-export const SIGNUP_FAILURE = 'SIGNUP_FAILURE'
-export const SIGNUP_FORWARD = 'SIGNUP_FORWARD'
-export const SIGNUP_BACKWARD = 'SIGNUP_BACKWARD'
+import signupAction from '../actions/';
 
 
 export function signupRequest (payload) {

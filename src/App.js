@@ -1,18 +1,12 @@
-import React, { Component } from 'react'
-import { Route, Switch, BrowserRouter } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
-import { createLogger } from 'redux-logger';
-import thunk from 'redux-thunk'
+import React, { Component } from 'react';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { ConnectedRouter as Router } from 'connected-react-router';
+import { Provider } from 'react-redux';
 
+import { store } from './store';
 
-import peramaxApp from './reducers'
 import SignUp from './components/SignUp'
 import NotFound from './components/NotFound'
-
-const loggerMiddleware = createLogger();
-
-const store = createStore(peramaxApp, applyMiddleware(thunk, loggerMiddleware))
 
 class App extends Component {
     render() {
