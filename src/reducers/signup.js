@@ -1,49 +1,24 @@
 import { SIGNUP_REQUEST, SIGNUP_SUCCESS,
-	 SIGNUP_FAILURE, SIGNUP_FORWARD, SIGNUP_BACKWARD } from '../actions/constants';
+	 SIGNUP_FAILURE, SIGNUP_FORWARD, SIGNUP_BACKWARD,
+         CHANGE_STATE, CHANGE_PROVINCE } from '../actions/constants';
 
 import signupAction from '../actions/';
 
 
-export function signupRequest (payload) {
-  return {
-    type: SIGNUP_REQUEST,
-    payload
-  }
-}
-
-export function signupSuccess (payload) {
-  return {
-    type: SIGNUP_SUCCESS,
-    payload
-  }
-}
-
-export function signupFailure (payload) {
-  return {
-    type: SIGNUP_FAILURE,
-    payload
-  }
-}
-
-export function signupForward(){
-    return {
-	type: SIGNUP_FORWARD
-    }
-}
-
-export function signupBackward(){
-    return {
-	type: SIGNUP_BACKWARD
-    }
-}
-
-
 const initialState = {
     user: null,
-    progress: 0
+    progress: 0,
+    state: '',
+    province: ''
 };
 
 const ACTION_HANDLERS = {
+    [CHANGE_PROVINCE]: (state, payload) => {
+	return { ...state, province: payload.data }
+    },
+    [CHANGE_STATE]: (state, payload) => {
+	return { ...state, state: payload.data }
+    },
     [SIGNUP_REQUEST]: (state, { payload }) => {
 	return { ...state, isLoading: true }
     },

@@ -29,16 +29,6 @@ class SignUp extends Component {
 	invalid: PropTypes.bool.isRequired
     }
     
-    state = { province: 'Abra', state: 'Australian Capital Territory', password: '' }
-    
-    handleProvince = (value) => {
-	this.setState({province: value.value})
-    }
-    
-    handleState = (value) => {
-	this.setState({state: value.value})
-    }
-    
     handleSignup = (values) => {
 	let payload = {
 	    country: "Australia",
@@ -317,7 +307,7 @@ class SignUp extends Component {
                           component={DropdownInput}
                           label=""
                           name="state_origin"
-                          onChange={(value) => this.handleState(value)}
+                          onChange={(value) => this.props.changeState(value)}
                           items={stateOptions}
                           validate={[ required() ]}
                         />
@@ -332,7 +322,7 @@ class SignUp extends Component {
                           component={DropdownInput}
                           label=""
                           name="suburb_origin"
-                          items={stateSuburb[this.state.state]}
+                          items={stateSuburb[this.props.getState]}
                           validate={[ required() ]}
                         />
                       </FormItem>
@@ -372,7 +362,7 @@ class SignUp extends Component {
                         <Field
                           component={DropdownInput}
                           label=""
-                          onChange={(value) => this.handleProvince(value)}
+                          onChange={(value) => this.props.changeProvince(value)}
                           name="province_philippines"
                           items={provinceOptions}
                           validate={[ required() ]}
@@ -388,7 +378,7 @@ class SignUp extends Component {
                         component={DropdownInput}
                         label=""
                         name="city_philippines"
-                        items={provinceCities[this.state.province]}
+                        items={provinceCities[this.props.getProvince]}
                         validate={[ required() ]}
                       />
                       </FormItem>
@@ -465,7 +455,9 @@ class SignUp extends Component {
 const mapStateToProps = state => {
     return {
 	getRegProgress: state.signup.progress,
-	getRegState: state.signup.signupSuccess
+	getRegState: state.signup.signupSuccess,
+        getState: state.signup.state,
+        getProvince: state.signup.province
     }
 }
 
@@ -479,7 +471,13 @@ const mapDispatchToProps = dispatch => {
 	},
 	signupRegress: () => {
 	    dispatch(signup.signupBackward())
-	}
+	},
+        changeProvince: (payload) => {
+            dispatch(signup.changeProvince(payload))
+        },
+        changeState: (payload) => {
+            dispatch(signup.changeState(payload))
+        }
     }
 }
 

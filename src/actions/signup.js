@@ -1,14 +1,13 @@
 import { push } from 'react-router-redux';
 import axios from 'axios';
 import {
-    signupRequest,
-    signupSuccess,
-    signupFailure
-} from '../reducers/signup';
-
-import {
     SIGNUP_FORWARD,
-    SIGNUP_BACKWARD
+    SIGNUP_BACKWARD,
+    SIGNUP_SUCCESS,
+    SIGNUP_REQUEST,
+    SIGNUP_FAILURE,
+    CHANGE_STATE,
+    CHANGE_PROVINCE
 } from './constants';
 
 export const signupForward = () => {
@@ -23,6 +22,40 @@ export const signupBackward = () => {
     }
 }
 
+export function signupRequest (payload) {
+  return {
+    type: SIGNUP_REQUEST,
+    payload
+  }
+}
+
+export function signupSuccess (payload) {
+  return {
+    type: SIGNUP_SUCCESS,
+    payload
+  }
+}
+
+export function signupFailure (payload) {
+  return {
+    type: SIGNUP_FAILURE,
+    payload
+  }
+}
+
+export function changeState(payload){
+    return {
+	type: CHANGE_STATE,
+	data: payload
+    }
+}
+
+export function changeProvince(payload){
+    return {
+	type: CHANGE_PROVINCE,
+	data: payload
+    }
+}
 
 // TODO: Create Signup Generator
 
