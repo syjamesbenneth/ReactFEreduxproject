@@ -4,8 +4,7 @@ import { Field, Fields, reduxForm, formValueSelector } from 'redux-form'
 import { required, email, confirmation, generateValidation } from 'redux-form-validators'
 import PropTypes from 'prop-types'
 
-import { signup } from '../actions' 
-import axios from 'axios'
+import { signup } from '../actions'
 
 import { Form, FormGroup, Button, Tile, DatePickerInput, FormItem, FormLabel } from 'carbon-components-react'
 import 'rc-steps/assets/index.css'

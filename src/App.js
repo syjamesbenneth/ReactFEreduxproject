@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 
 import { store } from './store';
 
-import SignUp from './components/SignUp'
+import SignUp from './containers/SignUp'
 import NotFound from './components/NotFound'
 
 class App extends Component {
